@@ -259,6 +259,7 @@ def parse_config_parameters():
             parameter_start = gcode_line.find("=")
             if parameter_start != -1:
                 parm = gcode_line[parameter_start + 1:].strip()
+                gui.log_warning(f"extrusion_width parm: {parm}")
 
                 if len(parm) == 0:
                     gui.log_warning("extrusion width parameter does not contain any values FULL PURGE REDUCTION will not work")
@@ -266,10 +267,12 @@ def parse_config_parameters():
                     continue
 
                 if parm[-1] == "%":
+                    gui.log_warning(f"extrusion_width parm -1: {parm[-1]}")
                     parm = parm.replace("%", "").strip()
                     tmpval = float(parm)
                     v.extrusion_width = v.nozzle_diameter * tmpval / 100.0
                 else:
+                    gui.log_warning(f"extrusion_width else: {float(gcode_line[parameter_start + 1:].strip())}")
                     v.extrusion_width = float(gcode_line[parameter_start + 1:].strip())
 
                 v.tx_offset = 2 + 4 * v.extrusion_width
