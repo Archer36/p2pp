@@ -279,6 +279,14 @@ def parse_config_parameters():
                 v.yy_offset = 2 + 8 * v.extrusion_width
             continue
 
+        if gcode_line.startswith("; external perimeters"):
+            parameter_start = gcode_line.find("=")
+            if parameter_start != -1:
+                gui.log_warning(f"External perimeters: {gcode_line[parameter_start + 1:].strip()}")
+            else:
+                gui.log_warning("Couldn't find external perimeter size!")
+            continue
+
         if gcode_line.startswith("; infill_speed"):
             parameter_start = gcode_line.find("=")
             if parameter_start != -1:
